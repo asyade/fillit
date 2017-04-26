@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/13 20:39:19 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/04/21 12:32:10 by acorbeau         ###   ########.fr       */
+/*   Created: 2017/04/13 13:40:46 by acorbeau          #+#    #+#             */
+/*   Updated: 2017/04/17 21:26:12 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <string.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 {
-	int		len;
-	char	*str;
+	size_t	len;
+	int		i;
 
-	if (!s1 && !s2)
-		return ((char *)NULL);
-	else if (s1 && !s2)
-		return ((char *)ft_strdup(s1));
-	else if (s2 && !s1)
-		return ((char *)ft_strdup(s2));
-	len = ft_strlen(s1) + ft_strlen(s2);
-	if ((str = ft_memalloc(len * sizeof(char) + 1)) == 0)
-		return ((char *)NULL);
-	ft_strcat(str, s1);
-	return (ft_strcat(str, s2));
+	i = 0;
+	len = ft_strlen(to_find);
+	if (to_find[0] == '\0')
+		return ((char *)str);
+	while (str[i] != '\0' && n-- >= len)
+	{
+		if (ft_strncmp(to_find, &(str[i]), len) == 0)
+		{
+			return ((char *)&(str[i]));
+		}
+		i++;
+	}
+	return (NULL);
 }

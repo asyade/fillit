@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/13 20:39:19 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/04/21 12:32:10 by acorbeau         ###   ########.fr       */
+/*   Created: 2017/04/12 16:27:52 by acorbeau          #+#    #+#             */
+/*   Updated: 2017/04/18 13:03:04 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <string.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		len;
-	char	*str;
+	char			*ret;
+	char			*sptr;
+	char			*rptr;
+	unsigned int	i;
 
-	if (!s1 && !s2)
+	if (!f || !s || (ret = ft_strnew(ft_strlen(s))) == NULL)
 		return ((char *)NULL);
-	else if (s1 && !s2)
-		return ((char *)ft_strdup(s1));
-	else if (s2 && !s1)
-		return ((char *)ft_strdup(s2));
-	len = ft_strlen(s1) + ft_strlen(s2);
-	if ((str = ft_memalloc(len * sizeof(char) + 1)) == 0)
-		return ((char *)NULL);
-	ft_strcat(str, s1);
-	return (ft_strcat(str, s2));
+	rptr = ret;
+	sptr = (char *)s;
+	i = 0;
+	while (*sptr)
+	{
+		*rptr = f(i, *sptr);
+		rptr++;
+		sptr++;
+		i++;
+	}
+	return (ret);
 }
